@@ -24,6 +24,7 @@
 .csb-pills{display:flex; flex-wrap:wrap; gap:8px; margin:.6em 0 .3em;}
 .csb-pill{font-family:system-ui,sans-serif; font-size:.78rem; color:var(--dark); background:#f6f4ef; border:1px solid var(--border); border-radius:20px; padding:5px 12px;}
 .csb-pill b{color:var(--red);}
+.csb-pill.grey{background:#eceae5; color:#5a6572;}
 .csb-embed{border:1px solid var(--border); border-radius:12px; overflow:hidden; margin:1.4em 0;}
 .csb-embed iframe{display:block; width:100%; border:0;}
 .csb-chart{border:1px solid var(--border); border-radius:12px; overflow:hidden; margin:1.4em 0; font-family:system-ui,-apple-system,"Segoe UI",sans-serif;}
@@ -42,13 +43,16 @@
 .csb-chart .cap{display:none; padding:2px 16px 6px; font-size:.78rem; font-style:italic; color:#5a6572; line-height:1.45;}
 .csb-chart #m1:checked ~ .cap1,.csb-chart #m2:checked ~ .cap2,.csb-chart #m3:checked ~ .cap3{display:block;}
 .csb-chart .row{display:flex; align-items:center; gap:10px; padding:5px 0;}
+.csb-chart .row.nodata{opacity:.85;}
 .csb-chart .rank{flex:0 0 16px; text-align:right; font-size:.85rem; font-weight:700; color:#8a94a0;}
 .csb-chart .name{flex:0 0 150px; font-size:.83rem; color:var(--dark);}
 .csb-chart .track{flex:1; display:flex; align-items:center; background:#f0ede7; border-radius:5px; height:26px;}
+.csb-chart .track.empty{background:repeating-linear-gradient(45deg,#f0ede7,#f0ede7 6px,#e6e2d9 6px,#e6e2d9 12px);}
 .csb-chart .fill{height:100%; border-radius:5px; display:flex; align-items:center; justify-content:flex-end; min-width:1px;}
 .csb-chart .val{font-size:.75rem; font-weight:700; white-space:nowrap; font-variant-numeric:tabular-nums;}
 .csb-chart .val.in{color:#fff; padding-right:8px;}
 .csb-chart .val.out{color:var(--dark); padding-left:8px;}
+.csb-chart .nodata-label{font-size:.72rem; font-style:italic; color:#8a94a0; padding-left:10px; white-space:nowrap;}
 .csb-chart .foot{display:flex; justify-content:space-between; align-items:center; gap:10px; padding:10px 16px 14px; font-size:.68rem; color:#8a94a0; border-top:1px solid var(--border); margin-top:6px;}
 .csb-chart .foot b{color:var(--red); font-size:.8rem; font-family:"Source Serif 4",Georgia,serif;}
 @media(max-width:640px){.csb-chart .name{flex-basis:92px;} .csb-chart .head h3{font-size:.95rem;}}
@@ -88,7 +92,7 @@
     <li><strong>Raspberries are the odds-on favourite.</strong> A 53 percent chance any documented case is theirs.</li>
     <li><strong>Bagged salad leads the modern era.</strong> Behind 30 percent of all cases, and every big outbreak since 2013.</li>
     <li><strong>Four foods tie on frequency.</strong> Raspberries, salad, cilantro and basil each caused 4 outbreaks.</li>
-    <li><strong>Green onions score zero.</strong> On every advisory list, yet no outbreak on record.</li>
+    <li><strong>Green onions have no documented outbreak, but we still flag them.</strong> Michigan put them on its 2026 advisory list, the same kind of warning cilantro and basil got before either had a confirmed case tied to them.</li>
     <li><strong>Canada is not spared.</strong> The 2020 salad outbreak sickened 370 Canadians.</li>
     <li><strong>Only heat is reliable.</strong> Washing will not remove the parasite. Cooking kills it.</li>
   </ul>
@@ -107,9 +111,9 @@
     <label for="m2">Total cases</label>
     <label for="m3">Outbreaks</label>
   </div>
-  <div class="cap cap1">Implied probability is each food's share of all documented cases. The bigger the bar, the more cases trace back to it.</div>
-  <div class="cap cap2">Total cases counts the people sickened in documented outbreaks of each food since 1995.</div>
-  <div class="cap cap3">Outbreaks counts the separate events each food has caused. Four foods tie at 4.</div>
+  <div class="cap cap1">Implied probability is each food's share of all documented cases. The bigger the bar, the more cases trace back to it. Green onions have no documented outbreak, so there is no bar to draw. They are included because a state health department has them on an active advisory, not because of a measured 0% risk.</div>
+  <div class="cap cap2">Total cases counts the people sickened in documented outbreaks of each food since 1995. Green onions have no documented outbreak on record.</div>
+  <div class="cap cap3">Outbreaks counts the separate events each food has caused. Four foods tie at 4. Green onions have never been confirmed as a source.</div>
   <div class="barset set1">
     <div class="row"><span class="rank">1</span><span class="name">Raspberries</span><div class="track"><div class="fill" style="width:100.0%;background:rgba(28,43,58,1.0)"><span class="val in">52.7%</span></div></div></div>
     <div class="row"><span class="rank">2</span><span class="name">Bagged salad &amp; lettuce</span><div class="track"><div class="fill" style="width:57.3%;background:rgba(28,43,58,0.744)"><span class="val in">30.2%</span></div></div></div>
@@ -117,7 +121,7 @@
     <div class="row"><span class="rank">4</span><span class="name">Vegetable tray</span><div class="track"><div class="fill" style="width:9.9%;background:rgba(28,43,58,0.459)"></div><span class="val out">5.2%</span></div></div>
     <div class="row"><span class="rank">5</span><span class="name">Basil</span><div class="track"><div class="fill" style="width:5.9%;background:rgba(28,43,58,0.435)"></div><span class="val out">3.1%</span></div></div>
     <div class="row"><span class="rank">6</span><span class="name">Snow peas</span><div class="track"><div class="fill" style="width:3.8%;background:rgba(28,43,58,0.423)"></div><span class="val out">2.0%</span></div></div>
-    <div class="row"><span class="rank">7</span><span class="name">Green onions</span><div class="track"><div class="fill" style="width:0.0%;background:rgba(28,43,58,0.4)"></div><span class="val out">0.0%</span></div></div>
+    <div class="row nodata"><span class="rank">7</span><span class="name">Green onions</span><div class="track empty"></div><span class="nodata-label">on advisory · no documented outbreak</span></div>
   </div>
   <div class="barset set2">
     <div class="row"><span class="rank">1</span><span class="name">Raspberries</span><div class="track"><div class="fill" style="width:100.0%;background:rgba(28,43,58,1.0)"><span class="val in">2,531</span></div></div></div>
@@ -126,7 +130,7 @@
     <div class="row"><span class="rank">4</span><span class="name">Vegetable tray</span><div class="track"><div class="fill" style="width:9.9%;background:rgba(28,43,58,0.459)"></div><span class="val out">250</span></div></div>
     <div class="row"><span class="rank">5</span><span class="name">Basil</span><div class="track"><div class="fill" style="width:5.8%;background:rgba(28,43,58,0.435)"></div><span class="val out">148</span></div></div>
     <div class="row"><span class="rank">6</span><span class="name">Snow peas</span><div class="track"><div class="fill" style="width:3.8%;background:rgba(28,43,58,0.423)"></div><span class="val out">96</span></div></div>
-    <div class="row"><span class="rank">7</span><span class="name">Green onions</span><div class="track"><div class="fill" style="width:0.0%;background:rgba(28,43,58,0.4)"></div><span class="val out">0</span></div></div>
+    <div class="row nodata"><span class="rank">7</span><span class="name">Green onions</span><div class="track empty"></div><span class="nodata-label">on advisory · no documented outbreak</span></div>
   </div>
   <div class="barset set3">
     <div class="row"><span class="rank">1</span><span class="name">Raspberries</span><div class="track"><div class="fill" style="width:100.0%;background:rgba(28,43,58,1.0)"><span class="val in">4</span></div></div></div>
@@ -135,7 +139,7 @@
     <div class="row"><span class="rank">4</span><span class="name">Basil</span><div class="track"><div class="fill" style="width:100.0%;background:rgba(28,43,58,1.0)"><span class="val in">4</span></div></div></div>
     <div class="row"><span class="rank">5</span><span class="name">Vegetable tray</span><div class="track"><div class="fill" style="width:25.0%;background:rgba(28,43,58,0.55)"></div><span class="val out">1</span></div></div>
     <div class="row"><span class="rank">6</span><span class="name">Snow peas</span><div class="track"><div class="fill" style="width:25.0%;background:rgba(28,43,58,0.55)"></div><span class="val out">1</span></div></div>
-    <div class="row"><span class="rank">7</span><span class="name">Green onions</span><div class="track"><div class="fill" style="width:0.0%;background:rgba(28,43,58,0.4)"></div><span class="val out">0</span></div></div>
+    <div class="row nodata"><span class="rank">7</span><span class="name">Green onions</span><div class="track empty"></div><span class="nodata-label">on advisory · no documented outbreak</span></div>
   </div>
   <div class="foot"><span>Sources: US CDC, US FDA and the Public Health Agency of Canada, outbreak reports 1995 to 2026.</span><b>Canada Sports Betting</b></div>
 </div>
@@ -244,16 +248,15 @@
   </figure>
 
   <h3><span class="csb-badge grey">7</span> Green onions</h3>
-  <p class="csb-details">Imported · 0 outbreaks · advisory list only</p>
-  <div class="csb-state"><b>State connection</b>None. With no outbreak on record, there is no state to attach.</div>
-  <p>Green onions close the board at zero.</p>
-  <p>They sit on Michigan's advisory list, but no North American outbreak with case counts is on record, and the CDC leaves them off its list too.</p>
-  <p>Zero is a gap in the record, not a clean bill of health. Treat them like everything above.</p>
+  <p class="csb-details">Imported · no documented outbreak · advisory list only</p>
+  <div class="csb-state"><b>Why it's here</b>Michigan named green onions on its 2026 cyclospora advisory list, the same kind of warning issued for cilantro and basil before either had a confirmed outbreak. That is the only reason to include a food with zero cases: a state health department is actively flagging it to shoppers right now.</div>
+  <p>Green onions sit outside the ranking entirely. They are not "safe," they are unranked, and unranked is not the same as cleared.</p>
+  <p>No North American outbreak with case counts has ever named them, and the CDC leaves them off its own list. That gap could mean genuinely low risk, or it could mean no one has traced a case back to them yet. The data does not tell us which.</p>
+  <p>We include them because a state advisory is a real signal, even without a confirmed case count behind it. Treat the absence of a track record as unknown, not as a clean bill of health.</p>
   <div class="csb-pills">
-    <span class="csb-pill"><b>0%</b> implied probability of a case</span>
-    <span class="csb-pill">no odds on record</span>
-    <span class="csb-pill"><b>0</b> cases</span>
-    <span class="csb-pill">not proven safe</span>
+    <span class="csb-pill grey">no documented outbreak</span>
+    <span class="csb-pill grey">on advisory lists</span>
+    <span class="csb-pill grey">data gap, not proven safe</span>
   </div>
 
   <h2>Canada Was Not Spared</h2>
@@ -277,7 +280,7 @@
   <p class="csb-final">The shortest odds in your fridge rarely sit on the food you would suspect.</p>
 
   <h2>How We Ran the Numbers</h2>
-  <p class="csb-method"><b>What we measured.</b> Every food ever tied to a documented cyclospora outbreak in North America. We rank them by their share of total reported cases, shown as an implied probability and as odds of 1 in N. That share is the chance a randomly chosen documented case traces to that food. It is not any one person's chance of infection.</p>
+  <p class="csb-method"><b>What we measured.</b> Every food ever tied to a documented cyclospora outbreak in North America. We rank them by their share of total reported cases, shown as an implied probability and as odds of 1 in N. That share is the chance a randomly chosen documented case traces to that food. It is not any one person's chance of infection. One food, green onions, has no documented outbreak but appears anyway because it currently sits on a state health advisory list; it is listed separately and unranked, not scored at zero, since an absence of cases is a gap in the record rather than a measured result.</p>
   <p class="csb-method"><b>Time period.</b> Outbreaks from 1995 through July 2026.</p>
   <p class="csb-method"><b>How we scored it.</b> We summed cases and outbreaks per food from primary reports. We then divided each food's cases by the 4,807 total documented cases to get its implied probability. The odds are one divided by that probability.</p>
   <p class="csb-method"><b>What we excluded.</b> The outbreak record comes from US CDC and FDA investigations, the most complete source available. Canadian counts are included where the same outbreak crossed the border. Outbreaks with no compiled case count stay in the outbreak tally but sit out of the case total. The ongoing 2026 outbreak has no confirmed food and is not counted.</p>
