@@ -26,6 +26,32 @@
 .csb-pill b{color:var(--red);}
 .csb-embed{border:1px solid var(--border); border-radius:12px; overflow:hidden; margin:1.4em 0;}
 .csb-embed iframe{display:block; width:100%; border:0;}
+.csb-chart{border:1px solid var(--border); border-radius:12px; overflow:hidden; margin:1.4em 0; font-family:system-ui,-apple-system,"Segoe UI",sans-serif;}
+.csb-chart .strip{height:4px; background:linear-gradient(90deg,var(--dark),var(--red),var(--dark)); background-size:200% 100%; animation:csbshim 3s linear infinite;}
+@keyframes csbshim{to{background-position:-200% 0;}}
+@media (prefers-reduced-motion:reduce){.csb-chart .strip{animation:none;}}
+.csb-chart .head{background:var(--dark); color:#fff; padding:13px 18px;}
+.csb-chart .head h3{margin:0; font-size:1.05rem; font-weight:700; color:#fff;}
+.csb-chart .head p{margin:3px 0 0; font-size:.8rem; color:#c9d2dc;}
+.csb-chart input{position:absolute; left:-9999px;}
+.csb-chart .tabs{display:flex; flex-wrap:wrap; gap:6px; padding:12px 16px 2px;}
+.csb-chart .tabs label{font-size:.8rem; font-weight:600; padding:6px 12px; border:1px solid var(--border); border-radius:20px; cursor:pointer; color:#5a6572; background:#fff;}
+.csb-chart #m1:checked ~ .tabs label[for=m1],.csb-chart #m2:checked ~ .tabs label[for=m2],.csb-chart #m3:checked ~ .tabs label[for=m3]{background:var(--red); color:#fff; border-color:var(--red);}
+.csb-chart .barset{display:none; padding:8px 16px 2px;}
+.csb-chart #m1:checked ~ .set1,.csb-chart #m2:checked ~ .set2,.csb-chart #m3:checked ~ .set3{display:block;}
+.csb-chart .cap{display:none; padding:2px 16px 6px; font-size:.78rem; font-style:italic; color:#5a6572; line-height:1.45;}
+.csb-chart #m1:checked ~ .cap1,.csb-chart #m2:checked ~ .cap2,.csb-chart #m3:checked ~ .cap3{display:block;}
+.csb-chart .row{display:flex; align-items:center; gap:10px; padding:5px 0;}
+.csb-chart .rank{flex:0 0 16px; text-align:right; font-size:.85rem; font-weight:700; color:#8a94a0;}
+.csb-chart .name{flex:0 0 150px; font-size:.83rem; color:var(--dark);}
+.csb-chart .track{flex:1; display:flex; align-items:center; background:#f0ede7; border-radius:5px; height:26px;}
+.csb-chart .fill{height:100%; border-radius:5px; display:flex; align-items:center; justify-content:flex-end; min-width:1px;}
+.csb-chart .val{font-size:.75rem; font-weight:700; white-space:nowrap; font-variant-numeric:tabular-nums;}
+.csb-chart .val.in{color:#fff; padding-right:8px;}
+.csb-chart .val.out{color:var(--dark); padding-left:8px;}
+.csb-chart .foot{display:flex; justify-content:space-between; align-items:center; gap:10px; padding:10px 16px 14px; font-size:.68rem; color:#8a94a0; border-top:1px solid var(--border); margin-top:6px;}
+.csb-chart .foot b{color:var(--red); font-size:.8rem; font-family:"Source Serif 4",Georgia,serif;}
+@media(max-width:640px){.csb-chart .name{flex-basis:92px;} .csb-chart .head h3{font-size:.95rem;}}
 .csb-figure{margin:1.4em 0; border:1px solid var(--border); border-radius:12px; overflow:hidden;}
 .csb-figure .csb-strip{height:4px; background:linear-gradient(90deg,var(--dark),var(--red));}
 .csb-figure img{display:block; width:100%; height:360px; object-fit:cover;}
@@ -57,7 +83,7 @@
     <b>What these odds measure.</b> A food's implied probability is its share of every documented cyclospora case. Odds of 1 in 4 mean 1 in every 4 people sickened in a solved outbreak had eaten that food. This is the food's track record, not your personal chance of getting sick from tonight's salad.
   </div>
 
-  <h2>Key Findings</h2>
+  <h2>What the Odds Reveal</h2>
   <ul class="csb-findings">
     <li><strong>Raspberries are the odds-on favourite.</strong> A 53 percent chance any documented case is theirs.</li>
     <li><strong>Bagged salad leads the modern era.</strong> Behind 30 percent of all cases, and every big outbreak since 2013.</li>
@@ -67,11 +93,54 @@
     <li><strong>Only heat is reliable.</strong> Washing will not remove the parasite. Cooking kills it.</li>
   </ul>
 
-  <div class="csb-embed">
-    <iframe src="https://[USERNAME].github.io/[REPO]/chart.html" height="720" title="Foods ranked by implied probability of a cyclospora case"></iframe>
+  <div class="csb-chart">
+  <div class="strip"></div>
+  <div class="head">
+    <h3>Which foods carry the biggest cyclospora risk?</h3>
+    <p>Choose a measure to re-rank the foods.</p>
   </div>
+  <input type="radio" name="csbmetric" id="m1" checked>
+  <input type="radio" name="csbmetric" id="m2">
+  <input type="radio" name="csbmetric" id="m3">
+  <div class="tabs">
+    <label for="m1">Implied probability</label>
+    <label for="m2">Total cases</label>
+    <label for="m3">Outbreaks</label>
+  </div>
+  <div class="cap cap1">Implied probability is each food's share of all documented cases. The bigger the bar, the more cases trace back to it.</div>
+  <div class="cap cap2">Total cases counts the people sickened in documented outbreaks of each food since 1995.</div>
+  <div class="cap cap3">Outbreaks counts the separate events each food has caused. Four foods tie at 4.</div>
+  <div class="barset set1">
+    <div class="row"><span class="rank">1</span><span class="name">Raspberries</span><div class="track"><div class="fill" style="width:100.0%;background:rgba(28,43,58,1.0)"><span class="val in">52.7%</span></div></div></div>
+    <div class="row"><span class="rank">2</span><span class="name">Bagged salad &amp; lettuce</span><div class="track"><div class="fill" style="width:57.3%;background:rgba(28,43,58,0.744)"><span class="val in">30.2%</span></div></div></div>
+    <div class="row"><span class="rank">3</span><span class="name">Cilantro</span><div class="track"><div class="fill" style="width:13.1%;background:rgba(28,43,58,0.479)"></div><span class="val out">6.9%</span></div></div>
+    <div class="row"><span class="rank">4</span><span class="name">Vegetable tray</span><div class="track"><div class="fill" style="width:9.9%;background:rgba(28,43,58,0.459)"></div><span class="val out">5.2%</span></div></div>
+    <div class="row"><span class="rank">5</span><span class="name">Basil</span><div class="track"><div class="fill" style="width:5.9%;background:rgba(28,43,58,0.435)"></div><span class="val out">3.1%</span></div></div>
+    <div class="row"><span class="rank">6</span><span class="name">Snow peas</span><div class="track"><div class="fill" style="width:3.8%;background:rgba(28,43,58,0.423)"></div><span class="val out">2.0%</span></div></div>
+    <div class="row"><span class="rank">7</span><span class="name">Green onions</span><div class="track"><div class="fill" style="width:0.0%;background:rgba(28,43,58,0.4)"></div><span class="val out">0.0%</span></div></div>
+  </div>
+  <div class="barset set2">
+    <div class="row"><span class="rank">1</span><span class="name">Raspberries</span><div class="track"><div class="fill" style="width:100.0%;background:rgba(28,43,58,1.0)"><span class="val in">2,531</span></div></div></div>
+    <div class="row"><span class="rank">2</span><span class="name">Bagged salad &amp; lettuce</span><div class="track"><div class="fill" style="width:57.3%;background:rgba(28,43,58,0.744)"><span class="val in">1,451</span></div></div></div>
+    <div class="row"><span class="rank">3</span><span class="name">Cilantro</span><div class="track"><div class="fill" style="width:13.1%;background:rgba(28,43,58,0.478)"></div><span class="val out">331</span></div></div>
+    <div class="row"><span class="rank">4</span><span class="name">Vegetable tray</span><div class="track"><div class="fill" style="width:9.9%;background:rgba(28,43,58,0.459)"></div><span class="val out">250</span></div></div>
+    <div class="row"><span class="rank">5</span><span class="name">Basil</span><div class="track"><div class="fill" style="width:5.8%;background:rgba(28,43,58,0.435)"></div><span class="val out">148</span></div></div>
+    <div class="row"><span class="rank">6</span><span class="name">Snow peas</span><div class="track"><div class="fill" style="width:3.8%;background:rgba(28,43,58,0.423)"></div><span class="val out">96</span></div></div>
+    <div class="row"><span class="rank">7</span><span class="name">Green onions</span><div class="track"><div class="fill" style="width:0.0%;background:rgba(28,43,58,0.4)"></div><span class="val out">0</span></div></div>
+  </div>
+  <div class="barset set3">
+    <div class="row"><span class="rank">1</span><span class="name">Raspberries</span><div class="track"><div class="fill" style="width:100.0%;background:rgba(28,43,58,1.0)"><span class="val in">4</span></div></div></div>
+    <div class="row"><span class="rank">2</span><span class="name">Bagged salad &amp; lettuce</span><div class="track"><div class="fill" style="width:100.0%;background:rgba(28,43,58,1.0)"><span class="val in">4</span></div></div></div>
+    <div class="row"><span class="rank">3</span><span class="name">Cilantro</span><div class="track"><div class="fill" style="width:100.0%;background:rgba(28,43,58,1.0)"><span class="val in">4</span></div></div></div>
+    <div class="row"><span class="rank">4</span><span class="name">Basil</span><div class="track"><div class="fill" style="width:100.0%;background:rgba(28,43,58,1.0)"><span class="val in">4</span></div></div></div>
+    <div class="row"><span class="rank">5</span><span class="name">Vegetable tray</span><div class="track"><div class="fill" style="width:25.0%;background:rgba(28,43,58,0.55)"></div><span class="val out">1</span></div></div>
+    <div class="row"><span class="rank">6</span><span class="name">Snow peas</span><div class="track"><div class="fill" style="width:25.0%;background:rgba(28,43,58,0.55)"></div><span class="val out">1</span></div></div>
+    <div class="row"><span class="rank">7</span><span class="name">Green onions</span><div class="track"><div class="fill" style="width:0.0%;background:rgba(28,43,58,0.4)"></div><span class="val out">0</span></div></div>
+  </div>
+  <div class="foot"><span>Sources: US CDC, US FDA and the Public Health Agency of Canada, outbreak reports 1995 to 2026.</span><b>Canada Sports Betting</b></div>
+</div>
 
-  <h2>The Foods Behind North America's Cyclospora Outbreaks</h2>
+  <h2>The Riskiest Foods in the Produce Aisle, Ranked</h2>
 
   <h3><span class="csb-badge">1</span> Raspberries</h3>
   <p class="csb-details">Imported from Guatemala · 4 outbreaks · 2,531 cases</p>
@@ -187,7 +256,7 @@
     <span class="csb-pill">not proven safe</span>
   </div>
 
-  <h2>The Canadian Connection</h2>
+  <h2>Canada Was Not Spared</h2>
   <p>This is not only an American problem. Canadians buy the same California, Mexican and Central American produce, and the biggest modern outbreak jumped the border.</p>
   <p>In 2020, the Public Health Agency of Canada confirmed 370 cases from the Fresh Express salad outbreak. Ontario took the brunt.</p>
   <table>
@@ -201,13 +270,13 @@
   </table>
   <p>Ontario alone out-cased every other province and territory combined. These outbreaks follow the supply chain, not the border.</p>
 
-  <h2>What the Odds Say About Your Grocery Cart</h2>
+  <h2>How to Beat the Odds in the Produce Aisle</h2>
   <p>Take out two decades-old raspberry outbreaks and one food group owns the modern era. Bagged salads and leafy greens have sickened more North Americans than anything else since 2013, and they are the food under investigation today.</p>
   <p>For a shopper, that shrinks a scary parasite to a short list. Favour whole heads over bags, peel what you can, and cook greens and herbs when the recipe allows.</p>
   <p>The quieter worry sits upstream. In 2025, the main US early-warning system dropped cyclospora from required tracking, so the next outbreak may surface later than this one did.</p>
   <p class="csb-final">The shortest odds in your fridge rarely sit on the food you would suspect.</p>
 
-  <h2>Methodology</h2>
+  <h2>How We Ran the Numbers</h2>
   <p class="csb-method"><b>What we measured.</b> Every food ever tied to a documented cyclospora outbreak in North America. We rank them by their share of total reported cases, shown as an implied probability and as odds of 1 in N. That share is the chance a randomly chosen documented case traces to that food. It is not any one person's chance of infection.</p>
   <p class="csb-method"><b>Time period.</b> Outbreaks from 1995 through July 2026.</p>
   <p class="csb-method"><b>How we scored it.</b> We summed cases and outbreaks per food from primary reports. We then divided each food's cases by the 4,807 total documented cases to get its implied probability. The odds are one divided by that probability.</p>
@@ -222,5 +291,4 @@
     <li>US Food and Drug Administration, Outbreak Investigation of Cyclospora in Bagged Salads, 2020</li>
     <li>Public Health Agency of Canada, Outbreak of Cyclospora infections linked to salad products, 2020</li>
   </ul>
-
 </article>
